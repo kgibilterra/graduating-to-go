@@ -1,6 +1,7 @@
 package main
 
 import (
+	"encoding/json"
 	"io/ioutil"
 	"log"
 	"net/http"
@@ -73,5 +74,22 @@ func xkcdHandler(w http.ResponseWriter, r *http.Request) {
 		log.Println("Error reading body of request")
 	}
 
+	xkcd := xkcd{}
+	json.Unmarshal(body, &xkcd)
+
 	w.Write(body)
+}
+
+type xkcd struct {
+	Month      int    `json:"month"`
+	Num        int    `json:"num"`
+	Link       string `json:"link"`
+	Year       int    `json:"year"`
+	News       string `json:"news"`
+	SafeTitle  string `json:"safe_title"`
+	Transcript string `json:"transcript"`
+	Alt        string `json:"alt"`
+	Img        string `json:"img"`
+	Title      string `json:"title"`
+	Day        int    `json:"day"`
 }
