@@ -77,7 +77,11 @@ func xkcdHandler(w http.ResponseWriter, r *http.Request) {
 	xkcd := xkcd{}
 	json.Unmarshal(body, &xkcd)
 
-	w.Write(body)
+	// buffer := new(bytes.Buffer)
+	// err := png.Encode(buffer)
+
+	w.Header().Set("Content-Type", "image/png")
+	w.Write([]byte(xkcd.Img))
 }
 
 type xkcd struct {
